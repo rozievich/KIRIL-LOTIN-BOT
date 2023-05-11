@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  bot:
+    build: .
+    working_dir: /apps
+    restart: always
+    container_name: bot_container
+    environment:
+      TOKEN: 6018412093:AAEo658rkTp3z13JEdaQ1o_VoZ1G4b26U4k
+      DB_PASS: 11
+      DB_HOST: pg
+      DB_PORT: 5432
+    command: python main.py
+    depends_on:
+      - pg
+  pg:
+    image: postgres:14.1-alpine
+    restart: always
+    container_name: my_postgres
+    environment:
+      POSTGRES_PASSWORD: 11
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    ports:
+      - "5433:5432"
+volumes:
+  db_data:
