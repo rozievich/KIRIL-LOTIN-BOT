@@ -52,7 +52,7 @@ async def comments(msg: types.Message, state: FSMContext):
         for i in get_admins():
             await bot.send_message(i[0],
                                    f"ID: {msg.from_user.id}\nName: {msg.from_user.first_name}\nUsername: {msg.from_user.username}\nFikrlar: {msg.text}")
-        await msg.answer(text='Talab va Takliflar adminga jo\'natildi!', reply_markup=main_btn())
+        await msg.answer(text='Talab va Takliflar adminga jo\'natildi!', reply_markup=admin_btn())
         await state.finish()
 
 
