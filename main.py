@@ -86,6 +86,7 @@ async def rek_state(msg: types.Message, state: FSMContext):
                 except:  # noqa
                     summa += 1
         await state.finish()
+        await msg.answer(text='Admin Page!', reply_markup=admin_btn())
 
 
 @dp.message_handler(Text("👤 Add Admin"))
