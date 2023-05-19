@@ -7,7 +7,7 @@ services:
     restart: always
     container_name: bot_container
     environment:
-      TOKEN:
+      TOKEN: 6018412093:AAHUVdwJyRGquU1QanOIJFk5d84DqXwgA1s
       DB_PASS: 11
       DB_HOST: pg
       DB_PORT: 5432

@@ -9,7 +9,7 @@ from aiogram.types import BotCommand
 
 from db_data import get_user, register, create_table, get_admins, add_admin, get_admin, get_users, delete_admin
 from reply_btn import main_btn, admin_btn, exit_state
-from states import AdminState, AdverState, AddState, DelState
+from states import AdminState, AdverState, AddState, DelState, KrillLotin, LotinKrill
 from transliterate import to_latin, to_cyrillic
 
 TOKEN = os.getenv('TOKEN')
@@ -52,7 +52,7 @@ async def comments(msg: types.Message, state: FSMContext):
         for i in get_admins():
             await bot.send_message(i[0],
                                    f"ID: {msg.from_user.id}\nName: {msg.from_user.first_name}\nUsername: {msg.from_user.username}\nFikrlar: {msg.text}")
-        await msg.answer(text='Talab va Takliflar adminga jo\'natildi!', reply_markup=admin_btn())
+        await msg.answer(text='Talab va Takliflar adminga jo\'natildi!', reply_markup=main_btn())
         await state.finish()
 
 
@@ -131,12 +131,41 @@ async def main_menu(msg: types.Message):
     await msg.answer(text="🤖 Main Menu!", reply_markup=main_btn())
 
 
-@dp.message_handler()
-async def to_latin_handler(msg: types.Message):
-    if msg.text.isascii():
+@dp.message_handler(Text("♻️ Lotin Krill"))
+async def krill_lotin(msg: types.Message):
+    await LotinKrill.text.set()
+    await msg.answer("✍️ Menga matn yuboring: ", reply_markup=exit_state())
+
+
+@dp.message_handler(state=LotinKrill.text)
+async def krill_lotin_state(msg: types.Message, state):
+    if msg.text == '❌':
+        await state.finish()
+        await msg.answer(text="❌ Xabar almashish bekor qilindi!", reply_markup=main_btn())
+    else:
         await msg.answer(text=to_cyrillic(msg.text))
+
+
+@dp.message_handler(Text("♻️ Krill Lotin"))
+async def lotin_krill(msg: types.Message):
+    await KrillLotin.text.set()
+    await msg.answer("✍️ Menga matn yuboring: ", reply_markup=exit_state())
+
+
+@dp.message_handler(state=KrillLotin.text)
+async def lotin_krill_state(msg: types.Message, state):
+    if msg.text == '❌':
+        await state.finish()
+        await msg.answer(text="❌ Xabar almashish bekor qilindi!", reply_markup=main_btn())
     else:
         await msg.answer(text=to_latin(msg.text))
+
+
+@dp.message_handler()
+async def default_data(msg: types.Message):
+    await msg.answer(text=f"Sizning Ma'lumotlaringiz 🗂\nID: {msg.from_user.id}\nIsm: {msg.from_user.first_name}"
+                          f"\nUsername: {msg.from_user.username}")
+    await msg.answer(text=f"Iltimos xizmatlardan foydalanish uchun bo'limlardan birini tanlang 👇")
 
 
 async def on_startup(dp):

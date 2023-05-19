@@ -15,3 +15,11 @@ class AddState(StatesGroup):
 
 class DelState(StatesGroup):
     deladmin = State()
+
+
+class KrillLotin(StatesGroup):
+    text = State()
+
+
+class LotinKrill(StatesGroup):
+    text = State()

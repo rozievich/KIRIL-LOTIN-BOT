@@ -2,8 +2,8 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
 def main_btn():
-    icon = ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-    icon.add(KeyboardButton('👨🏻‍💻 Admin'))
+    icon = ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True, row_width=2)
+    icon.add(KeyboardButton("♻️ Lotin Krill"), KeyboardButton("♻️ Krill Lotin"), KeyboardButton('👨🏻‍💻 Admin'))
     return icon
 
 
