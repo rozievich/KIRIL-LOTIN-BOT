@@ -3,14 +3,13 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 def main_btn():
     icon = ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True, row_width=2)
-    icon.add(KeyboardButton("♻️ Lotin Krill"), KeyboardButton("♻️ Krill Lotin"), KeyboardButton('👨🏻‍💻 Admin'))
+    icon.add(KeyboardButton('👨🏻‍💻 Admin'))
     return icon
 
 
 def admin_btn():
     btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, row_width=2)
-    btn.add(KeyboardButton('📊 Statistika'), KeyboardButton('🗣 Reklama'), KeyboardButton("👤 Add Admin"),
-            KeyboardButton("❌ Delete Admin"), KeyboardButton('🔙'))
+    btn.add(KeyboardButton('📊 Statistika'), KeyboardButton('🗣 Reklama'))
     return btn
 
 
