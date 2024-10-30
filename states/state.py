@@ -1,8 +1,6 @@
-from aiogram.dispatcher.filters.state import StatesGroup, State
+from aiogram.fsm.state import State, StatesGroup
 
 
-class AdminState(StatesGroup):
-    comments = State()
-
-class AdverState(StatesGroup):
-    adver = State()
+# Reklama uchun javobgar state
+class AdsState(StatesGroup):
+    ads = State()

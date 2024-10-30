@@ -1,19 +1,41 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
-def main_btn():
-    icon = ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True, row_width=2)
-    icon.add(KeyboardButton('👨🏻‍💻 Admin'))
-    return icon
+main_admin_btn = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="<b>📊 Hisobot</b>"),
+            KeyboardButton(text="<b>💸 Reklama</b>")
+        ],
+        [
+            KeyboardButton(text="🛠 Sozlamalar")
+        ]
+    ],
+    one_time_keyboard=True,
+    input_field_placeholder="KIRIL-LOTIN control panel...",
+    resize_keyboard=True
+)
 
 
-def admin_btn():
-    btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, row_width=2)
-    btn.add(KeyboardButton('📊 Statistika'), KeyboardButton('🗣 Reklama'))
-    return btn
+settings_admin_btn = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="Kanal ulash ⛓️"),
+            KeyboardButton(text="Kanal uzish ⛓️‍💥")
+        ],
+        [
+            KeyboardButton(text="❌")
+        ]
+    ]
+)
 
-
-def exit_state():
-    btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    btn.add(KeyboardButton('❌'))
-    return btn
+exit_btn = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text="❌")
+        ]
+    ],
+    resize_keyboard=True,
+    one_time_keyboard=True,
+    input_field_placeholder="KIRIL-LOTIN advertising..."
+)
