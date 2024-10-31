@@ -1223,6 +1223,8 @@ def to_cyrillic(text):
     3. ц exception words
     4. э exception words
     """
+    # Replace ' in text with `
+    text = text.replace("'", "ʻ")
     # These compounds must be converted before other letters
     compounds_first = {
         'ch': 'ч', 'Ch': 'Ч', 'CH': 'Ч',

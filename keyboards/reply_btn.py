@@ -4,8 +4,8 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 main_admin_btn = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="<b>📊 Hisobot</b>"),
-            KeyboardButton(text="<b>💸 Reklama</b>")
+            KeyboardButton(text="📊 Hisobot"),
+            KeyboardButton(text="💸 Reklama")
         ],
         [
             KeyboardButton(text="🛠 Sozlamalar")
@@ -26,8 +26,12 @@ settings_admin_btn = ReplyKeyboardMarkup(
         [
             KeyboardButton(text="❌")
         ]
-    ]
+    ],
+    one_time_keyboard=True,
+    input_field_placeholder="KIRIL-LOTIN settings panel...",
+    resize_keyboard=True
 )
+
 
 exit_btn = ReplyKeyboardMarkup(
     keyboard=[
