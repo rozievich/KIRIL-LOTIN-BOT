@@ -9,7 +9,7 @@ class AdsState(StatesGroup):
 # Kanallar uchun javobgar statelar
 class ChannelAddState(StatesGroup):
     url = State()
-    user_id = State()
+    channel_id = State()
 
 class ChannelDeleteState(StatesGroup):
-    user_id = State()
+    channel_id = State()

@@ -41,5 +41,5 @@ exit_btn = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True,
     one_time_keyboard=True,
-    input_field_placeholder="KIRIL-LOTIN advertising..."
+    input_field_placeholder="KIRIL-LOTIN exit panel..."
 )
