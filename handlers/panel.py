@@ -17,8 +17,8 @@ async def admin_panel_handler(msg: types.Message):
 
 async def user_statistic_handler(msg: types.Message):
     if msg.from_user.id in ADMINS:
-
-        await msg.answer(text=f"Admin uchun userlar hisoboti bo'ladi", reply_markup=main_admin_btn)
+        users = session.query(User).all()
+        await msg.answer(text=f"<b>{msg.from_user.full_name}</b> uchun tayyorlangan Hisobot 📈\n\nFoydalanuvchilar soni:  {len(users)}", reply_markup=main_admin_btn)
     else:
         await msg.answer(text=f"Kechirasiz, {msg.from_user.full_name}\nSiz admin emasga o'xshaysiz 🙄", reply_markup=types.ReplyKeyboardRemove())
 
@@ -51,7 +51,11 @@ async def ads_send_handler(msg: types.Message, bot: Bot, state: FSMContext):
 
 async def setting_btn_handler(msg: types.Message):
     if msg.from_user.id in ADMINS:
-        await msg.answer(text="Sozlamalar Paneliga xush kelibsiz ✍️", reply_markup=settings_admin_btn)
+        channels = session.query(Channel).all()
+        text=f"<b>Sozlamalar Paneliga xush kelibsiz ✍️</b>\nBarcha ulangan kanallar 📈\n\n"
+        for channel in channels:
+            text += f"<b>Kanal URL:</b>  {channel.channel_url}\n<b>Kanal ID:</b>  {channel.channel_id}\n\n"
+        await msg.answer(text=text, reply_markup=settings_admin_btn)
     else:
         await msg.answer(text=f"Kechirasiz, {msg.from_user.full_name}\nSiz admin emasga o'xshaysiz 🙄", reply_markup=types.ReplyKeyboardRemove())
 
@@ -65,7 +69,7 @@ async def setting_channel_add_handler(msg: types.Message, state: FSMContext):
 
 async def channel_add_handler(msg: types.Message, state: FSMContext):
     if msg.text == "❌":
-        await msg.answer(text="Kanal ulash bekor qilindi ⛓️‍💥", reply_markup=main_admin_btn)
+        await msg.answer(text="Kanal ulash bekor qilindi ⛓️‍💥", reply_markup=settings_admin_btn)
         await state.clear()
     else:
         await state.update_data(channel_url=msg.text)
@@ -74,16 +78,16 @@ async def channel_add_handler(msg: types.Message, state: FSMContext):
 
 async def channel_add_id_handler(msg: types.Message, state: FSMContext):
     if msg.text == "❌":
-        await msg.answer(text="Kanal ulash bekor qilindi ⛓️‍💥", reply_markup=main_admin_btn)
+        await msg.answer(text="Kanal ulash bekor qilindi ⛓️‍💥", reply_markup=settings_admin_btn)
         await state.clear()
     else:
         try:
             channel_info = await state.get_data()
             session.add(Channel(channel_url=channel_info['channel_url'], channel_id=str(msg.text)))
             session.commit()
-            await msg.answer("Kanal muvaffaqiyatli ulandi 🌐", reply_markup=main_admin_btn)
+            await msg.answer("Kanal muvaffaqiyatli ulandi 🌐", reply_markup=settings_admin_btn)
         except:
-            await msg.answer("Kanal ulashda muammo yuzaga keldi 🔕", reply_markup=main_admin_btn)
+            await msg.answer("Kanal ulashda muammo yuzaga keldi 🔕", reply_markup=settings_admin_btn)
         await state.clear()
 
 
@@ -96,7 +100,7 @@ async def channel_delete_handler(msg: types.Message, state: FSMContext):
 
 async def channel_delete_id_handler(msg: types.Message, state: FSMContext):
     if msg.text == "❌":
-        await msg.answer(text="Kanal ulash bekor qilindi ⛓️‍💥", reply_markup=main_admin_btn)
+        await msg.answer(text="Kanal ulash bekor qilindi ⛓️‍💥", reply_markup=settings_admin_btn)
         await state.clear()
     else:
         try:
@@ -104,12 +108,12 @@ async def channel_delete_id_handler(msg: types.Message, state: FSMContext):
             if user_info:
                 session.delete(user_info)
                 session.commit()
-                await msg.answer(f"{msg.text} - ID raqamli kanal muvaffaqiyatli o'chirildi ✅", reply_markup=setting_btn_handler)
+                await msg.answer(f"{msg.text} - ID raqamli kanal muvaffaqiyatli o'chirildi ✅", reply_markup=settings_admin_btn)
             else:
-                await msg.answer("Bu ID raqam bilan hech qanday kanal topilmadi ⛓️", reply_markup=setting_btn_handler)
+                await msg.answer("Bu ID raqam bilan hech qanday kanal topilmadi ⛓️", reply_markup=settings_admin_btn)
             await state.clear()
         except:
-            await msg.answer("Kanal o'chirishda qandaydir muammo yuzaga keldi 🤔", reply_markup=setting_btn_handler)
+            await msg.answer("Kanal o'chirishda qandaydir muammo yuzaga keldi 🤔", reply_markup=settings_admin_btn)
             await state.clear()
 
 

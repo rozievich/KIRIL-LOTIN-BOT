@@ -3,7 +3,7 @@ from aiogram.filters.command import Command, CommandStart
 
 from .commands import start_handler, user_info_handler, help_handler
 from .panel import user_statistic_handler, admin_panel_handler, ads_main_handler, ads_send_handler, setting_btn_handler, setting_channel_add_handler, channel_add_handler, channel_add_id_handler, channel_delete_handler, channel_delete_id_handler, exit_handler
-from .users import translation_handler
+from .users import translation_handler, channel_check_handler_data_handler
 from states.state import AdsState, ChannelAddState, ChannelDeleteState
 
 router = Router(name="core")
@@ -30,4 +30,5 @@ router.message.register(channel_delete_id_handler, ChannelDeleteState.channel_id
 
 router.message.register(exit_handler, F.text == "❌")
 
+router.callback_query.register(channel_check_handler_data_handler, F.data == "checksubdone")
 router.message.register(translation_handler)
